@@ -1,0 +1,177 @@
+<div>
+<fusiontime width="850" height="450" datasource="{{fcDataSource}}"><center><div class="loader"></div><p>FusionTime chart will load here</p></center></fusiontime>
+<hr>
+<h3>JavaScript Code</h3>
+<pre>
+<code class="language-javascript">
+  var app = angular.module("myApp", ["ngRoute", "ng-fusiontime"]);
+
+  app.controller("stockCtrl", ["$scope", function($scope) {
+  var data = [
+
+  ];
+  var values = [
+
+  ];
+  $scope.fcDataSource = {
+    chart: {
+      axes: [{
+        x: {},
+        y: {
+          name: {
+            label: {
+              text: 'PRICE (USD)'
+            }
+          },
+          numberFormatter: {
+            config: {
+              'fill': '',
+              'align': '',
+              'sign': '',
+              'symbol': '',
+              'zero': '',
+              'width': '',
+              'comma': '',
+              'precision': '.1s',
+              'type': 's'
+            },
+            suffix: '',
+            prefix: '$'
+          },
+        }
+      }],
+
+      datasets: [{
+        "category": {
+          "dateformat": "%m/%d/%Y",
+          "data": data
+        },
+        "dataset": [{
+          "uid": "ds-1",
+          "series": [{
+            "plot": {
+              "type": "candlestick",
+              "style": {
+                "fill": "#7f7f7f"
+              },
+              "bear": {
+                "style": {
+                  "fill": "#FF0000",
+                  "stroke": "#C1C0C3"
+                }
+              },
+              "bull": {
+                "style": {
+                  "fill": "#31908E",
+                  "stroke": "#C1C0C3"
+                }
+              },
+              "_wick": {
+                "style": {
+                  "stroke": "#C1C0C3"
+                }
+              }
+            },
+            "name": "AAPL",
+            "data": values
+
+          }]
+        }]
+      }],
+      "caption": [{
+        "title": {
+          "text": "Apple Inc. (AAPL)",
+          "style": {
+            "font-size": "20px",
+            "fill": "#545454"
+          }
+        },
+        "subtitle": {
+          "text": "Since stock split",
+          "style": {
+            "font-size": "15px",
+            "font-weight": "Semibold",
+            "fill": "#7B7B7B"
+          }
+        }
+      }],
+      "legend": [{
+        "hide": true
+      }],
+      "canvas": [{
+        "_style": {
+          "fill": "#333333",
+          "fill-opacity": 1
+        },
+        "uid": "canvas-1",
+        "divlines": {
+          "style": {
+            "stroke-dasharray": 5,
+            "fill": "#dbdbdb",
+            "stroke-width": "0.5",
+            "fill-opacity": "0",
+            "stroke": "#575757"
+          }
+        }
+      }],
+      "navigator": [{
+        "scroller": {
+          "hide": false
+        },
+        "style": {
+          "border-bottom": "1px #aaaaaa solid"
+        },
+        "standardTimeZone": {
+          "label": {
+            "text": ""
+          }
+        }
+      }],
+      crossline: [{
+        vertical: {
+          label: {
+            formatter: function(val) {
+              return this.formatter.formatAs(val, '%b %d, %Y');
+            },
+          }
+        }
+      }],
+      "tooltip": [{
+        numberFormatter: {
+          config: {
+            'fill': '',
+            'align': '',
+            'sign': '',
+            'symbol': '',
+            'zero': '',
+            'width': '',
+            'comma': '',
+            'precision': '',
+            'type': 's'
+          },
+          suffix: ' USD',
+          prefix: ''
+        }
+      }]
+    },
+    "extensions": {
+      "date-range-chooser": {
+        "disabled": false
+      },
+      "standard-period-selector": {
+        "default-select": "YTD",
+        "disabled": false
+      },
+      "growth-analyser": {
+        "disabled": true
+      },
+      "data-aggregator": {
+        "disabled": true
+      }
+    }
+  }
+
+}]);
+</code>
+</pre>
+</div>

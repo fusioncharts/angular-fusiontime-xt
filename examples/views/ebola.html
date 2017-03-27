@@ -1,0 +1,113 @@
+<div>
+<center>
+<fusiontime width="850" height="450" datasource="{{fcDataSource}}"><center><div class="loader"></div><p>FusionTime chart will load here</p></center></fusiontime>
+</center>
+<hr>
+<h3>JavaScript Code</h3>
+<pre>
+<code class="language-javascript">
+  app.controller("ebolaCtrl", ["$scope", "$http", function($scope, $http) {
+    $scope.fcDataSource = null;
+    $scope.getData = function() {
+      $http.get('/examples/data/ebola.json').success(function(res) {
+        var dates = [],
+          sierra = [],
+          guinea = [],
+          liberia = [];
+          res.forEach(function(item) {
+            if (item.Country == "Guinea") {
+              guinea.push(item.value);
+            }
+            if (item.Country == "Liberia") {
+              liberia.push(item.value);
+            }
+            if (item.Country == "Sierra Leone") {
+              sierra.push(item.value);
+              dates.push(item.Date)
+            }
+          });
+
+        $scope.fcDataSource = dataSource: {
+          chart: {
+            axes: [{
+              x: {},
+              y: {
+                name: {
+                  label: {
+                    text: 'Ebola Outbreak count'
+                  }
+                }
+              }
+            }],
+            datasets: [{
+              "category": {
+                "dateformat": "%Y-%m-%e",
+                "data": dates
+              },
+              "dataset": [{
+                "series": [{
+                  "plot": {
+                    "type": "column"
+                  },
+                  "name": "Sierra Leone",
+                  "data": sierra
+                },
+                {
+                  "plot": {
+                    "type": "column"
+                  },
+                  "name": "Guinea",
+                  "data": guinea
+                }, {
+                  "plot": {
+                    "type": "column"
+                  },
+                  "name": "Liberia",
+                  "data": liberia
+                }
+              ]
+              }]
+            }],
+            "caption": [{
+              "title": {
+                "text": "Ebola Outbreak in West Africa",
+                "style": {
+                  "font-size": "20px",
+                  "fill": "#545454"
+                }
+              },
+              "subtitle": {
+                "text": "Outbreak Distribution",
+                "style": {
+                  "font-size": "15px",
+                  "font-weight": "Semibold",
+                  "fill": "#7B7B7B"
+                }
+              }
+            }],
+            "legend": [{
+              layout: function(obj) {
+                return obj.block;
+              },
+              position: function(obj) {
+                return obj.right;
+              },
+              orientation: function(obj) {
+                return obj.vertical;
+              },
+              alignment: function(obj) {
+                return obj.top;
+              }
+            }],
+
+            "navigator": [{
+              hide: true
+            }]
+          }
+        }
+      });
+    };
+  }]);
+</code>
+</pre>
+</div>

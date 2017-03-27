@@ -1,0 +1,225 @@
+<div>
+<center>
+<fusiontime width="850" height="450" datasource="{{fcDataSource}}"><center><div class="loader"></div><p>FusionTime chart will load here</p></center></fusiontime>
+</center>
+<hr>
+<h3>JavaScript Code</h3>
+<pre>
+<code class="language-javascript">
+  app.controller("slackCtrl", ["$scope", "$http", function($scope, $http) {
+    $scope.fcDataSource = null;
+    $scope.getData = function() {
+      $http.get('/examples/data/data.json').success(function(res) {
+        filterDate(res.all);
+        $scope.fcDataSource = {
+          chart: {
+            container: {
+              bound: {
+                _style: {
+                  fill: '#ffffff',
+                  'border-radius': '8'
+                }
+              }
+            },
+            axes: [{
+              x: {
+                singleTick: true,
+                major: {
+                  tick: {
+                    hide: false,
+                    _style: {
+                      stroke: '#a2a3a5'
+                    }
+                  },
+                  text: {
+                    _style: {
+                      'font-size': '10px',
+                      'fill': '#a2a3a5'
+                    }
+                  }
+                },
+                minor: {
+                  tick: {
+                    hide: false,
+                    _style: {
+                      fill: '#a2a3a5'
+                    }
+                  },
+                  text: {
+                    _style: {
+                      'font-size': '10px',
+                      'fill': '#a2a3a5'
+                    }
+                  }
+                }
+              },
+              y: {
+                name: {
+                  label: {
+                    text: 'Number of members messaging',
+                    style: {
+                      fill: '#aeaeae'
+                    }
+                  },
+                  margin: {
+                    top: 3,
+                    bottom: 12
+                  }
+                },
+                minor: {
+                  tick: {
+                    length: 10
+                  }
+                },
+                numberFormatter: {
+                  config: {
+                    'precision': '2'
+                  }
+                }
+              }
+            }],
+            caption: [{
+              title: {
+                text: 'Slack usage statistics',
+                "style": {
+                  "font-size": "20px",
+                  "fill": "#545454"
+                }
+              }
+            }],
+            datasets: [{
+              category: {
+                dateformat: '%Y-%m-%d',
+                data: reqData.dates
+              },
+              dataset: [{
+                uid: 'ds-1',
+                series: [{
+                    plot: {
+                      type: "line",
+                      style: {
+                        _stroke: "#ff9614",
+                        'stroke-width': 1
+                      }
+                    },
+                    name: "People directly messaging",
+                    data: reqData.dms,
+
+                  },
+                  {
+                    plot: {
+                      type: "line",
+                      style: {
+                        _stroke: "#fbda9a",
+                        'stroke-width': 1
+                      }
+                    },
+                    name: "People messaging in groups",
+                    data: reqData.gms
+                  }
+                ]
+              }]
+            }],
+            canvas: [{
+              uid: 'cnv-1',
+              axes: function(store) {
+                return store.getAxesByIndex(0);
+              },
+              dataset: function(store) {
+                return store.getDatasetsByIndex(0);
+              },
+              divlines: {
+                _style: {
+                  fill: 'none',
+                  _stroke: '#f2de98',
+                  'stroke-width': 0.5
+                }
+              }
+            }],
+            legend: [{
+              position: function(obj) {
+                return obj.top;
+              },
+              alignment: function(obj) {
+                return obj.right;
+              },
+              preDrawHook: function centerAlign() {
+                var self = this,
+                  parentsArr = self.getParents(),
+                  canvas = parentsArr[0].cacheByName('canvasContainer'),
+                  config = this.config;
+
+                config.x = canvas.getX() + canvas.getWidth() - self.getWidth();
+              }
+            }],
+            navigator: [{
+              activeWindow: {
+                selectionBox: {
+                  style: {
+                    _fill: '270-rgba(254, 254, 254, .7):0-rgba(243, 243, 243, .7):100',
+                    _stroke: '#000000',
+                    'stroke-width': 0
+                  }
+                }
+              },
+              scroller: {
+                hide: true
+              },
+              standardTimeZone: {
+                label: {
+                  text: 'GMT +5:30',
+                  style: {
+                    'font-size': '10px'
+                  }
+                }
+              },
+              margin: {
+                right: 10
+              },
+              style: {
+                stroke: 'none',
+                'fill-opacity': 1,
+                'border-top': '1px #aaaaaa solid',
+                'border-right': '0px #ffffff solid',
+                'border-bottom': '1px #aaaaaa solid',
+                'border-left': '0px #ffffff solid'
+              }
+            }],
+            crossline: [{
+              vertical: {
+                label: {
+                  formatter: function(val) {
+                    return this.formatter.formatAs(val, '%b %d, %Y');
+                  },
+                }
+              },
+              horizontal: {
+                label: {
+                  formatter: function(val) {
+                    return parseInt(val, 10) + '';
+                  },
+                }
+              }
+            }]
+          },
+          extensions: {
+            'date-range-chooser': {
+              disabled: true
+            },
+            'standard-period-selector': {
+              disabled: true
+            },
+            'growth-analyser': {
+              disabled: true
+            },
+            'data-aggregator': {
+              disabled: true
+            }
+          }
+        }
+      });
+    };
+  }]);
+</code>
+</pre>
+</div>

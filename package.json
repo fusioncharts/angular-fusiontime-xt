@@ -1,0 +1,24 @@
+{
+  "name": "angular-fusiontime-xt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/angular.fusiontime.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "python -m SimpleHTTPServer 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fusioncharts/angular-fusiontime-xt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fusioncharts/angular-fusiontime-xt/issues"
+  },
+  "homepage": "https://github.com/fusioncharts/angular-fusiontime-xt#readme",
+  "dependencies": {
+    "lite-server": "^2.3.0"
+  }
+}
