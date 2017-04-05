@@ -7090,3 +7090,7 @@ pre[class*="language-"] {
 .token.entity {
 	cursor: help;
 }
+
+.examples:hover {
+  background: #efefef;
+}
