@@ -7094,3 +7094,11 @@ pre[class*="language-"] {
 .examples:hover {
   background: #efefef;
 }
+
+.jumbotron {
+  padding-bottom: 0 !important;
+}
+
+.nav-tabs>li.active>a {
+  color: #fff !important;
+}
