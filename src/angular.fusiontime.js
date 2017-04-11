@@ -37,28 +37,26 @@
 
       let setDataTimer;
       const setChartData = function (dataSource) {
-          chartConfig.dataSource = dataSource;
-          // clear previous dataUpdate timer
-          if (setDataTimer) {
-            clearTimeout(setDataTimer);
+        chartConfig.dataSource = dataSource;
+        // clear previous dataUpdate timer
+        if (setDataTimer) {
+          clearTimeout(setDataTimer);
+        }
+        setDataTimer = setTimeout(() => {
+          if (chart && chart.rerender) {
+            // TODO: rerender the chart with new Data
           }
+        }, 100);
+      };
 
-          setDataTimer = setTimeout(() => {
-            if (chart && chart.rerender) {
-								// TODO: rerender the chart with new Data
-            }
-          }, 100);
-        },
-
-        drawChart = function (dataSource) {
-          chartConfig.dataSource = dataSource;
-          chart = new FusionCharts(chartConfig);
-          chart.render();
-        };
-
-				// attach a ovserver on dataSource
-				// TODO: call rerender()
-      scope.$watch('datasource', (newVal, oldVal) => {
+      const drawChart = function (dataSource) {
+        chartConfig.dataSource = dataSource;
+        chart = new FusionCharts(chartConfig);
+        chart.render();
+      };
+      // attach a ovserver on dataSource
+      // TODO: call rerender()
+      scope.$watch('datasource', () => {
         if (scope.$parent.fcDataSource) {
           drawChart(scope.$parent.fcDataSource);
         }
@@ -66,19 +64,19 @@
 
       scope.$watch('width', (newVal, oldVal) => {
         if (newVal !== oldVal) {
-						// TODO: resize width => chart.resizeTo
+          // TODO: resize width => chart.resizeTo
 
         }
       });
 
       scope.$watch('height', (newVal, oldVal) => {
         if (newVal !== oldVal) {
-						// TODO: resize height => chart.resizeTo
+          // TODO: resize height => chart.resizeTo
 
         }
       });
 
-				// For the initial load
+      // For the initial load
       angular.element(document).ready(() => {
         if (scope.$parent.fcDataSource) {
           drawChart(scope.$parent.fcDataSource);

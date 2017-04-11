@@ -5,12 +5,12 @@ const moduleConfig = {
   rules: [{
     test: /\.js$/,
     loader: 'babel-loader',
-    exclude: /node_modules/
-  }]
+    exclude: /node_modules/,
+  }],
 };
 
 const devServerConfig = {
-  contentBase: './'
+  contentBase: './',
 };
 
 module.exports = {
@@ -18,11 +18,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './examples'),
     publicPath: '/examples/',
-    filename: 'build.js'
+    filename: 'build.js',
   },
   module: moduleConfig,
   devServer: devServerConfig,
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -30,17 +30,17 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
-      }
+        NODE_ENV: 'production',
+      },
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       compress: {
-        warnings: false
-      }
+        warnings: false,
+      },
     }),
     new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
+      minimize: true,
+    }),
   ]);
 }

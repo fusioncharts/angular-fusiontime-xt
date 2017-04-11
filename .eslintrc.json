@@ -1,6 +1,24 @@
 {
-    "extends": "airbnb-base",
-    "plugins": [
-        "import"
-    ]
+  "extends": "airbnb-base",
+  "plugins": [
+    "import"
+  ],
+  "env": {
+    "browser": true,
+    "amd": true
+  },
+  "rules": {
+    "no-param-reassign": 0,
+    "global-require": 0,
+    "arrow-parens": 0,
+    "no-underscore-dangle": 0,
+    "no-console": ["warn", {
+      "allow": ["warn", "error"]
+    }]
+  },
+  "globals": {
+    "FusionCharts": true,
+    "Prism": true,
+    "angular": true
+  }
 }
