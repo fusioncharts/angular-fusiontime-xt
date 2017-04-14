@@ -13,7 +13,7 @@ const devServerConfig = {
   contentBase: './',
 };
 
-module.exports = {
+module.exports = [{
   entry: './examples/index.js',
   output: {
     path: path.resolve(__dirname, './examples'),
@@ -23,7 +23,7 @@ module.exports = {
   module: moduleConfig,
   devServer: devServerConfig,
   devtool: '#eval-source-map',
-};
+}];
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map';

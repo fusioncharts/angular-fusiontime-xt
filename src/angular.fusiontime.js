@@ -16,72 +16,75 @@
   } else {
     factory(angular);
   }
-}((angular) => {
-  let chart;
-  const fc = angular.module('ng-fusiontime', []);
-  fc.directive('fusiontime', () => ({
-    scope: {
-      width: '@',
-      height: '@',
-      datasource: '@',
-    },
-    link(scope, element, attrs) {
-      const chartConfig = {
-        type: 'timeseries',
-        width: attrs.width,
-        height: attrs.height,
-        renderAt: element[0],
-        dataFormat: 'json',
-        dataSource: scope.$parent.fcDataSource,
-      };
+}(function (angular) {
+  var chart;
+  var fc = angular.module('ng-fusiontime', []);
 
-      let setDataTimer;
-      const setChartData = function (dataSource) {
-        chartConfig.dataSource = dataSource;
+  fc.directive('fusiontime', function () {
+    return {
+      scope: {
+        width: '@',
+        height: '@',
+        datasource: '@',
+      },
+      link: function (scope, element, attrs) {
+        var chartConfig = {
+          type: 'timeseries',
+          width: attrs.width,
+          height: attrs.height,
+          renderAt: element[0],
+          dataFormat: 'json',
+          dataSource: scope.$parent.fcDataSource,
+        };
+
+        var setDataTimer;
+        var setChartData = function (dataSource) {
+          chartConfig.dataSource = dataSource;
         // clear previous dataUpdate timer
-        if (setDataTimer) {
-          clearTimeout(setDataTimer);
-        }
-        setDataTimer = setTimeout(() => {
-          if (chart && chart.rerender) {
-            // TODO: rerender the chart with new Data
+          if (setDataTimer) {
+            clearTimeout(setDataTimer);
           }
-        }, 100);
-      };
+          setDataTimer = setTimeout(function () {
+            if (chart && chart.rerender) {
+            // TODO: rerender the chart with new Data
+            }
+          }, 100);
+        };
 
-      const drawChart = function (dataSource) {
-        chartConfig.dataSource = dataSource;
-        chart = new FusionCharts(chartConfig);
-        chart.render();
-      };
+        var drawChart = function (dataSource) {
+          chartConfig.dataSource = dataSource;
+          chart = new FusionCharts(chartConfig);
+          chart.render();
+        };
       // attach a ovserver on dataSource
       // TODO: call rerender()
-      scope.$watch('datasource', () => {
-        if (scope.$parent.fcDataSource) {
-          drawChart(scope.$parent.fcDataSource);
-        }
-      });
+        scope.$watch('datasource', function () {
+          if (scope.$parent.fcDataSource) {
+            drawChart(scope.$parent.fcDataSource);
+          }
+        });
 
-      scope.$watch('width', (newVal, oldVal) => {
-        if (newVal !== oldVal) {
+        scope.$watch('width', function (newVal, oldVal) {
+          if (newVal !== oldVal) {
           // TODO: resize width => chart.resizeTo
 
-        }
-      });
+          }
+        });
 
-      scope.$watch('height', (newVal, oldVal) => {
-        if (newVal !== oldVal) {
+        scope.$watch('height', function (newVal, oldVal) {
+          if (newVal !== oldVal) {
           // TODO: resize height => chart.resizeTo
 
-        }
-      });
+          }
+        });
 
       // For the initial load
-      angular.element(document).ready(() => {
-        if (scope.$parent.fcDataSource) {
-          drawChart(scope.$parent.fcDataSource);
-        }
-      });
-    },
-  }));
+        angular.element(document).ready(function () {
+          if (scope.$parent.fcDataSource) {
+            drawChart(scope.$parent.fcDataSource);
+          }
+        });
+      },
+    };
+  });
 }));
